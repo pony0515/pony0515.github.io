@@ -1,9 +1,9 @@
-/*body {
+/* body {
     width: 960px;
-}*/
+} */
 
 h1 {
-    font-size: 30px;
+    font-size: 10px;
     color: red;
 }
 
@@ -17,8 +17,9 @@ h1 {
 
 
 .grouped li {
+    font-size: 10px;
     float: left;
-    margin: 10px;
+    margin: 5px;
     background-color: yellowgreen;
 }
 
@@ -27,7 +28,7 @@ h1 {
 }
 
 .Courts button {
-    margin: 15x;
+    margin: 5x;
 }
 
 .AdjustCourtsNum {
@@ -43,7 +44,7 @@ h1 {
 }
 
 .AddPlayerBtn {
-    margin: 10px 0px;
+    margin: 5px 0px;
 }
 
 .AdjustCourtsNum_1 {
@@ -67,5 +68,5 @@ h1 {
 }
 
 .ChangePBtn {
-    margin: 15px;
+    margin: 5px;
 }
