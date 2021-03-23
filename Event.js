@@ -18,12 +18,13 @@ function TargetOK(el) {
 
 function AddPlayers() {
     PlayerNum++;
-    str = '<li class="p' + (String)(PlayerNum) + '"><span class="sortHandle">人員' + (String)(PlayerNum) + '</span><input id="InputName' + (String)(PlayerNum) + '" type="text"><button class="Name">改名</button></li>';
+    str = '<li class="p' + (String)(PlayerNum) + '"><input id="InputName' + (String)(PlayerNum) + '" type="text"><button class="Name">改名</button><span class="sortHandle">人員' + (String)(PlayerNum) + '</span></li>';
     var el = $(str);
     $('#Waitgrouped').append(el);
     $('#Waitgrouped input').css('width', '50px');
     $('#Waitgrouped input').hide();
-
+    $('#Waitgrouped span').css('width', '18vw');
+    $('#Waitgrouped span').css('display', 'inline-block');
     CheckArray();
 }
 
