@@ -1,0 +1,73 @@
+/* body {
+    width: 960px;
+} */
+
+h1 {
+    font-size: 10px;
+    color: red;
+}
+
+.grouped {
+    list-style-position: inside;
+    padding: 0;
+    margin: 0;
+    overflow: hidden;
+    background-color: silver;
+}
+
+
+.grouped li {
+    /* font-size: 10px; */
+    /* width: 22vw; */
+    float: left;
+    margin: 2px;
+    background-color: yellowgreen;
+}
+
+.Courts {
+    background-color: sandybrown;
+}
+
+.Courts button {
+    margin: 5x;
+}
+
+.AdjustCourtsNum {
+    list-style-position: inside;
+    padding: 0;
+    margin: 0;
+    overflow: hidden;
+}
+
+.AdjustCourtsNum button {
+    float: left;
+    background-color: wheat;
+}
+
+.AddPlayerBtn {
+    margin: 5px 0px;
+}
+
+.AdjustCourtsNum_1 {
+    margin: 5px 0px;
+}
+
+.AdjustCourtsNum_2 {
+    margin: 5px 0px;
+}
+
+.AdjustCourtsNum_3 {
+    margin: 5px 0px;
+}
+
+.AdjustCourtsNum_4 {
+    margin: 5px 0px;
+}
+
+.DelZone {
+    background-color: red;
+}
+
+.ChangePBtn {
+    margin: 5px;
+}
