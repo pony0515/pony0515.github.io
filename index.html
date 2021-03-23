@@ -161,8 +161,10 @@
                         $('.p' + (String)(index) + ' button').text('確認');
                     } else if ($('.p' + (String)(index) + ' button').text() === '確認') {
                         console.log($('#InputName' + (String)(index)).val());
-                        $('.p' + +(String)(index) + ' span').text($('#InputName' + (String)(index))
-                            .val());
+                        newName = $('#InputName' + (String)(index)).val();
+                        if( newName != '' ){
+                            $('.p' + +(String)(index) + ' span').text( newName );
+                        }
                         $('#InputName' + +(String)(index)).hide();
                         $('.p' + (String)(index) + ' button').text('改名');
                         CheckArray();
