@@ -174,12 +174,9 @@ function AddMClick(who, target) {
             $('.' + (String)(who) + (String)(name) + ' button').text('確認');
         } else if ($('.' + (String)(who) + (String)(name) + ' button').text() === '確認') {
             newName = $('#Input' + (String)(who) + (String)(name)).val();
-            newName = checkName(NCourt1Array, newName);
-            newName = checkName(NCourt2Array, newName);
-            newName = checkName(NCourt3Array, newName);
-            newName = checkName(NCourt4Array, newName);
-            newName = checkName(NWaitArray, newName);
-            newName = checkName(NRestArray, newName);
+            newName = checkName(MaleArray, newName);
+            newName = checkName(FemaleArray, newName);
+            newName = checkName(VIParray, newName);
             if (newName != '') {
                 $('.' + (String)(who) + (String)(name) + ' span').text(newName);
             }
