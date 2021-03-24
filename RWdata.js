@@ -15,7 +15,7 @@ function ReadMembers(who) {
             NMaleArray.length = 0; ///clear
             for (let index = 0; index < parseInt(len); index++) {
                 var name = localStorage.getItem('男隊員' + (String)(index + 1));
-                NMaleArray.push(name);
+                //NMaleArray.push(name);
                 AddMember('Male', name);
             }
             break;
@@ -26,7 +26,7 @@ function ReadMembers(who) {
             NFemaleArray.length = 0;
             for (let index = 0; index < parseInt(len); index++) {
                 var name = localStorage.getItem('女隊員' + (String)(index + 1));
-                NFemaleArray.push(name);
+                //NFemaleArray.push(name);
                 AddMember('Female', name);
             }
             break;
@@ -37,7 +37,7 @@ function ReadMembers(who) {
             NVIPArray.length = 0;
             for (let index = 0; index < parseInt(len); index++) {
                 var name = localStorage.getItem('VIP隊員' + (String)(index + 1));
-                NVIPArray.push(name);
+                //NVIPArray.push(name);
                 AddMember('VIP', name);
             }
             break;
