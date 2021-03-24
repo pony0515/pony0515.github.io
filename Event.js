@@ -142,80 +142,80 @@ function CheckElement() {
 }
 
 function CheckArray() {
-    Court1Array.length = 0;
-    Court2Array.length = 0;
-    Court3Array.length = 0;
-    Court4Array.length = 0;
-    WaitArray.length = 0;
-    RestArray.length = 0;
+//     Court1Array.length = 0;
+//     Court2Array.length = 0;
+//     Court3Array.length = 0;
+//     Court4Array.length = 0;
+//     WaitArray.length = 0;
+//     RestArray.length = 0;
 
-    NCourt1Array.length = 0;
-    NCourt2Array.length = 0;
-    NCourt3Array.length = 0;
-    NCourt4Array.length = 0;
-    NWaitArray.length = 0;
-    NRestArray.length = 0;
+//     NCourt1Array.length = 0;
+//     NCourt2Array.length = 0;
+//     NCourt3Array.length = 0;
+//     NCourt4Array.length = 0;
+//     NWaitArray.length = 0;
+//     NRestArray.length = 0;
 
-    var n = $('.Court1 li').length;
-    for (let index = 0; index < n; index++) {
-        targetli = $('.Court1 li')[index].className;
-        targetspan = $('.Court1 span')[index].textContent;
-        targetinput = $('.Court1 input')[index].id;
-        targetli = (String)(targetli).replace(' dragging', '');
-        target = '<li class="' + targetli + '"><input id="' + targetinput + '" type="text"><button class="Name">改名</button><span class="sortHandle">' + targetspan + '</span></li>';
-        Court1Array.push(target);
-        NCourt1Array.push(targetspan);
-    }
-    var n = $('.Court2 li').length;
-    for (let index = 0; index < n; index++) {
-        targetli = $('.Court2 li')[index].className;
-        targetspan = $('.Court2 span')[index].textContent;
-        targetinput = $('.Court2 input')[index].id;
-        targetli = (String)(targetli).replace(' dragging', '');
-        target = '<li class="' + targetli + '"><input id="' + targetinput + '" type="text"><button class="Name">改名</button><span class="sortHandle">' + targetspan + '</span></li>';
-        Court2Array.push(target);
-        NCourt2Array.push(targetspan);
-    }
-    var n = $('.Court3 li').length;
-    for (let index = 0; index < n; index++) {
-        targetli = $('.Court3 li')[index].className;
-        targetspan = $('.Court3 span')[index].textContent;
-        targetinput = $('.Court3 input')[index].id;
-        targetli = (String)(targetli).replace(' dragging', '');
-        target = '<li class="' + targetli + '"><input id="' + targetinput + '" type="text"><button class="Name">改名</button><span class="sortHandle">' + targetspan + '</span></li>';
-        Court3Array.push(target);
-        NCourt3Array.push(targetspan);
-    }
-    var n = $('.Court4 li').length;
-    for (let index = 0; index < n; index++) {
-        targetli = $('.Court4 li')[index].className;
-        targetspan = $('.Court4 span')[index].textContent;
-        targetinput = $('.Court4 input')[index].id;
-        targetli = (String)(targetli).replace(' dragging', '');
-        target = '<li class="' + targetli + '"><input id="' + targetinput + '" type="text"><button class="Name">改名</button><span class="sortHandle">' + targetspan + '</span></li>';
-        Court4Array.push(target);
-        NCourt4Array.push(targetspan);
-    }
-    var n = $('.Wait li').length;
-    for (let index = 0; index < n; index++) {
-        targetli = $('.Wait li')[index].className;
-        targetspan = $('.Wait span')[index].textContent;
-        targetinput = $('.Wait input')[index].id;
-        targetli = (String)(targetli).replace(' dragging', '');
-        target = '<li class="' + targetli + '"><input id="' + targetinput + '" type="text"><button class="Name">改名</button><span class="sortHandle">' + targetspan + '</span></li>';
-        WaitArray.push(target);
-        NWaitArray.push(targetspan);
-    }
-    var n = $('.Rest li').length;
-    for (let index = 0; index < n; index++) {
-        targetli = $('.Rest li')[index].className;
-        targetspan = $('.Rest span')[index].textContent;
-        targetinput = $('.Rest input')[index].id;
-        targetli = (String)(targetli).replace(' dragging', '');
-        target = '<li class="' + targetli + '"><input id="' + targetinput + '" type="text"><button class="Name">改名</button><span class="sortHandle">' + targetspan + '</span></li>';
-        RestArray.push(target);
-        NRestArray.push(targetspan);
-    }
+//     var n = $('.Court1 li').length;
+//     for (let index = 0; index < n; index++) {
+//         targetli = $('.Court1 li')[index].className;
+//         targetspan = $('.Court1 span')[index].textContent;
+//         targetinput = $('.Court1 input')[index].id;
+//         targetli = (String)(targetli).replace(' dragging', '');
+//         target = '<li class="' + targetli + '"><input id="' + targetinput + '" type="text"><button class="Name">改名</button><span class="sortHandle">' + targetspan + '</span></li>';
+//         Court1Array.push(target);
+//         NCourt1Array.push(targetspan);
+//     }
+//     var n = $('.Court2 li').length;
+//     for (let index = 0; index < n; index++) {
+//         targetli = $('.Court2 li')[index].className;
+//         targetspan = $('.Court2 span')[index].textContent;
+//         targetinput = $('.Court2 input')[index].id;
+//         targetli = (String)(targetli).replace(' dragging', '');
+//         target = '<li class="' + targetli + '"><input id="' + targetinput + '" type="text"><button class="Name">改名</button><span class="sortHandle">' + targetspan + '</span></li>';
+//         Court2Array.push(target);
+//         NCourt2Array.push(targetspan);
+//     }
+//     var n = $('.Court3 li').length;
+//     for (let index = 0; index < n; index++) {
+//         targetli = $('.Court3 li')[index].className;
+//         targetspan = $('.Court3 span')[index].textContent;
+//         targetinput = $('.Court3 input')[index].id;
+//         targetli = (String)(targetli).replace(' dragging', '');
+//         target = '<li class="' + targetli + '"><input id="' + targetinput + '" type="text"><button class="Name">改名</button><span class="sortHandle">' + targetspan + '</span></li>';
+//         Court3Array.push(target);
+//         NCourt3Array.push(targetspan);
+//     }
+//     var n = $('.Court4 li').length;
+//     for (let index = 0; index < n; index++) {
+//         targetli = $('.Court4 li')[index].className;
+//         targetspan = $('.Court4 span')[index].textContent;
+//         targetinput = $('.Court4 input')[index].id;
+//         targetli = (String)(targetli).replace(' dragging', '');
+//         target = '<li class="' + targetli + '"><input id="' + targetinput + '" type="text"><button class="Name">改名</button><span class="sortHandle">' + targetspan + '</span></li>';
+//         Court4Array.push(target);
+//         NCourt4Array.push(targetspan);
+//     }
+//     var n = $('.Wait li').length;
+//     for (let index = 0; index < n; index++) {
+//         targetli = $('.Wait li')[index].className;
+//         targetspan = $('.Wait span')[index].textContent;
+//         targetinput = $('.Wait input')[index].id;
+//         targetli = (String)(targetli).replace(' dragging', '');
+//         target = '<li class="' + targetli + '"><input id="' + targetinput + '" type="text"><button class="Name">改名</button><span class="sortHandle">' + targetspan + '</span></li>';
+//         WaitArray.push(target);
+//         NWaitArray.push(targetspan);
+//     }
+//     var n = $('.Rest li').length;
+//     for (let index = 0; index < n; index++) {
+//         targetli = $('.Rest li')[index].className;
+//         targetspan = $('.Rest span')[index].textContent;
+//         targetinput = $('.Rest input')[index].id;
+//         targetli = (String)(targetli).replace(' dragging', '');
+//         target = '<li class="' + targetli + '"><input id="' + targetinput + '" type="text"><button class="Name">改名</button><span class="sortHandle">' + targetspan + '</span></li>';
+//         RestArray.push(target);
+//         NRestArray.push(targetspan);
+//     }
 }
 
 function CheckCourtsNum() {
