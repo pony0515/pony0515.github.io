@@ -267,12 +267,12 @@
 </head>
 
 <body>
-    <div class="tab">
+<!--     <div class="tab">
         <button class="tablinks" onclick="SelectTab(event,'CourtsManage')">球場管理</button>
         <button class="tablinks" onclick="SelectTab(event,'MembersManage')">隊員管理</button>
-    </div>
+    </div> -->
 
-    <div id="CourtsManage" class="tabcontent">
+    <div id="CourtsManage">
         <h3>球場狀態</h3>
         <div class="Courts">
             <div class="Court1">
@@ -349,7 +349,7 @@
         </div>
     </div>
 
-    <div id="MembersManage" class="tabcontent">
+    <div id="MembersManage">
         <h3>隊員狀態</h3>
         <div class="Mmale">
             <h3>男隊員</h3>
@@ -376,7 +376,7 @@
         </div>
     </div>
 
-    <script>
+<!--     <script>
         function SelectTab(evt, who) {
             var i, tabcontent, tablinks;
             tabcontent = document.getElementsByClassName('tabcontent');
@@ -390,7 +390,7 @@
             document.getElementById(who).style.display = 'block';
             evt.currentTarget.className += ' active';
         }
-    </script>
+    </script> -->
 </body>
 
 </html>
