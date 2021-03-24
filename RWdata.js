@@ -7,58 +7,58 @@ var VIPNum = 0;
 
 function ReadMembers(who) {
 
-    switch (who) {
-        case 'Male':
-            MaleNum = localStorage.getItem('男隊員數量');
-            if (MaleNum === null) MaleNum = 0;
-            MaleArray.length = 0; ///clear
-            for (let index = 0; index < parseInt(MaleNum); index++) {
-                MaleArray.push(localStorage.getItem('男隊員' + (String)(index + 1)));
-            }
-            break;
+//     switch (who) {
+//         case 'Male':
+//             MaleNum = localStorage.getItem('男隊員數量');
+//             if (MaleNum === null) MaleNum = 0;
+//             MaleArray.length = 0; ///clear
+//             for (let index = 0; index < parseInt(MaleNum); index++) {
+//                 MaleArray.push(localStorage.getItem('男隊員' + (String)(index + 1)));
+//             }
+//             break;
 
-        case 'Female':
-            FemaleNum = localStorage.getItem('女隊員數量');
-            if (FemaleNum === null) FemaleNum = 0;
-            FemaleArray.length = 0;
-            for (let index = 0; index < parseInt(FemaleNum); index++) {
-                FemaleArray.push(localStorage.getItem('女隊員' + (String)(index + 1)));
-            }
-            break;
+//         case 'Female':
+//             FemaleNum = localStorage.getItem('女隊員數量');
+//             if (FemaleNum === null) FemaleNum = 0;
+//             FemaleArray.length = 0;
+//             for (let index = 0; index < parseInt(FemaleNum); index++) {
+//                 FemaleArray.push(localStorage.getItem('女隊員' + (String)(index + 1)));
+//             }
+//             break;
 
-        case 'VIP':
-            VIPNum = localStorage.getItem('VIP隊員數量');
-            if (VIPNum === null) VIPNum = 0;
-            VIPArray.length = 0;
-            for (let index = 0; index < parseInt(VIPNum); index++) {
-                VIPArray.push(localStorage.getItem('VIP隊員' + (String)(index + 1)));
-            }
-            break;
-    }
+//         case 'VIP':
+//             VIPNum = localStorage.getItem('VIP隊員數量');
+//             if (VIPNum === null) VIPNum = 0;
+//             VIPArray.length = 0;
+//             for (let index = 0; index < parseInt(VIPNum); index++) {
+//                 VIPArray.push(localStorage.getItem('VIP隊員' + (String)(index + 1)));
+//             }
+//             break;
+//     }
 }
 
 function WriteMember(who) {
-    switch (who) {
-        case 'Male':
-            localStorage.setItem('男隊員數量', MaleNum);
-            for (let index = 0; index < MaleNum; index++) {
-                localStorage.setItem('男隊員' + (String)(index + 1), MaleArray[index]);
-            }
-            break;
-        case 'Female':
-            localStorage.setItem('女隊員數量', FemaleNum);
-            for (let index = 0; index < FemaleNum; index++) {
-                localStorage.setItem('女隊員' + (String)(index + 1), FemaleArray[index]);
-            }
-            break;
-        case 'VIP':
-            localStorage.setItem('VIP隊員數量', VIPNum);
-            for (let index = 0; index < VIPNum; index++) {
-                localStorage.setItem('VIP隊員' + (String)(index + 1), VIPArray[index]);
-            }
-            break;
+//     switch (who) {
+//         case 'Male':
+//             localStorage.setItem('男隊員數量', MaleNum);
+//             for (let index = 0; index < MaleNum; index++) {
+//                 localStorage.setItem('男隊員' + (String)(index + 1), MaleArray[index]);
+//             }
+//             break;
+//         case 'Female':
+//             localStorage.setItem('女隊員數量', FemaleNum);
+//             for (let index = 0; index < FemaleNum; index++) {
+//                 localStorage.setItem('女隊員' + (String)(index + 1), FemaleArray[index]);
+//             }
+//             break;
+//         case 'VIP':
+//             localStorage.setItem('VIP隊員數量', VIPNum);
+//             for (let index = 0; index < VIPNum; index++) {
+//                 localStorage.setItem('VIP隊員' + (String)(index + 1), VIPArray[index]);
+//             }
+//             break;
 
-    }
+//     }
 }
 
 function ManualDel() {
