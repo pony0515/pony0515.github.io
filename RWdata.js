@@ -185,7 +185,7 @@ function AddMClick(who, target) {
             }
             $('#Input' + (String)(who) + (String)(name)).hide();
             $('.' + (String)(who) + (String)(name) + ' button').text('改名');
-            CheckArray();
+            checkMArray();
         }
     })
 }
