@@ -1,6 +1,6 @@
-/* body {
-    width: 960px;
-} */
+body {
+    touch-action: manipulation;
+}
 
 h1 {
     font-size: 10px;
@@ -13,10 +13,6 @@ h1 {
     margin: 0;
     overflow: hidden;
     background-color: silver;
-}
-
-button {
-    touch-action: manipulation;
 }
 
 .grouped li {
