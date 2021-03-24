@@ -18,7 +18,7 @@ h1 {
 .grouped li {
     font-size: 12px;
     float: left;
-    margin: 2px;
+/*     margin: 2px; */
     background-color: yellowgreen;
 }
 
@@ -33,7 +33,7 @@ h1 {
 .Mgrouped li {
     font-size: 12px;
     float: left;
-    margin: 2px;
+/*     margin: 2px; */
     background-color: yellowgreen;
 }
 
