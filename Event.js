@@ -15,8 +15,8 @@ var NCourt2Array = new Array(0); ///球場2名單
 var NCourt3Array = new Array(0); ///球場3名單
 var NCourt4Array = new Array(0); ///球場4名單
 
-var ViewPlayersbutton = '6vw';
-var ViewPlayersbuttonFontSize = '0.8rem';
+var ViewPlayersbutton = '';
+var ViewPlayersbuttonFontSize = '';
 var ViewPlayersInput = '5vw';
 var ViewPlayersSpan = '13vw';
 
