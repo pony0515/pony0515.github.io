@@ -15,9 +15,9 @@ var NCourt2Array = new Array(0); ///球場2名單
 var NCourt3Array = new Array(0); ///球場3名單
 var NCourt4Array = new Array(0); ///球場4名單
 
-var ViewPlayersbutton = '4vw';
+var ViewPlayersbutton = '8vw';
 var ViewPlayersInput = '5vw';
-var ViewPlayersSpan = '16vw';
+var ViewPlayersSpan = '13vw';
 
 function TargetError(el) {
     $(el).css('background-color', 'red');
