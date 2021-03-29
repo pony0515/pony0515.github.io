@@ -15,7 +15,7 @@ var Court4Array = new Array(0); ///球場4名單 HTML格式
 var ViewPlayersbutton = '';
 var ViewPlayersbuttonFontSize = '';
 var ViewPlayersInput = '';
-var ViewPlayersSpan = '10vw';
+var ViewPlayersSpan = '13vw';
 
 var Court1Html = new Array(0);
 var Court2Html = new Array(0);
