@@ -96,16 +96,16 @@ function StringtoMember() {
         var len = 0;
         var who = 0; ///0:男隊員 1:女隊員 2:VIP
         try {
-            if( target.length <= 1 ){
-                throw('請先複製隊員 Err1');
+            if (target.length <= 1) {
+                throw ('請先複製隊員 Err1');
             }
             for (let i = 0; i < target.length - 1; i++) {
                 switch (findLengthJob) {
                     case 0: ///Find Lenght
                         len = parseInt(target[i]);
                         console.log(len);
-                        if(len >= target.length-2){
-                            throw('請先複製隊員 Err2');
+                        if (len >= target.length - 2) {
+                            throw ('請先複製隊員 Err2');
                         }
                         switch (who) {
                             case 0:
@@ -119,7 +119,7 @@ function StringtoMember() {
                                 break;
 
                             default:
-                                throw('請先複製隊員 Err3');
+                                throw ('請先複製隊員 Err3');
                         }
                         findLengthJob = 1;
                         break;
@@ -136,7 +136,7 @@ function StringtoMember() {
                                 VIPArray.push(target[i]);
                                 break;
                             default:
-                                throw('請先複製隊員 Err3');
+                                throw ('請先複製隊員 Err3');
                         }
                         num++;
                         if (num == len) {
@@ -441,7 +441,7 @@ function AddRestPlayers() {
     for (let i = 0; i < VIPArray.length; i++) {
         if (!checkspanValExist(VIPArray[i])) {
             PlayerNum++;
-            str = '<li style="background-color:;" class="p' + (String)(PlayerNum) + '">' +
+            str = '<li style="background-color:hotpink;" class="p' + (String)(PlayerNum) + '">' +
                 '<div style="display:flex;" class="sortHandle"><span style="display:inline-block;">' +
                 (String)(VIPArray[i]) + '</span></div></li>';
             var el = $(str);
