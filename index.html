@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, minimum-scale=0.5, maximum-scale=2.0, user-scalable=no" />
+    <title>羽球管理</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="draganddrop.css">
+    <link rel="stylesheet" href="http://www.jqueryscript.net/css/jquerysctipttop.css">
+    <!-- <link rel="stylesheet" href="https://bootswatch.com/flatly/bootstrap.min.css"> -->
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script src="draganddrop.js"></script>
+    <script src="Event.js"></script>
+    <script src="RWdata.js"></script>
+    <script src="Copy.js"></script>
+
+    <h1>羽球管理</h1>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            // init area
+            ReadMembers('Male');
+            ReadMembers('Female');
+            ReadMembers('VIP');
+
+            ReadPlayers();
+            CheckCourtsNum();
+            AddPlayers();
+            // AddRestPlayers(); 
+
+
+            checkPlayersCount();
+            InitHideCourtNameInput();
+            //ManualDel();
+            ///球場管理畫面
+            //ul.grouped 可排序 且 群組化
+            $('ul.grouped').sortable({
+                group: true,
+                handle: '.sortHandle',
+                update: function () {
+                    CheckArray();
+                    checkPlayersCount();
+                    ///刪除人員
+                    var n_del = $('.DelZone li').length;
+                    if (n_del >= 1) {
+                        $('.DelZone li').remove();
+                    }
+                    CheckElement();
+                },
+                scroll: true
+            });
+
+            ///Command Btn Event
+            ///添加臨打人員
+            $('.AddPlayerBtn').click(function () {
+                AddPayPlayers();
+                checkPlayersCount();
+                WritePlayers();
+                CheckElement();
+            });
+            $('.RefreshMemberBtn').click(function () {
+                AddRestPlayers();
+                checkPlayersCount();
+                WritePlayers();
+                CheckElement();
+            });
+            $('.ClearCourtBtn').click(function () {
+                var yes = confirm('清空場地會將所有人員清空\n請確認');
+                if (yes) {
+                    CheckElement();
+                    for (let index = 0; index < Court1Html.length; index++) {
+                        RestHtml.push(Court1Html[index]); ///等待區添加人員
+                    }
+                    Court1Html.length = 0; ///清空
+                    for (let index = 0; index < Court2Html.length; index++) {
+                        RestHtml.push(Court2Html[index]); ///等待區添加人員
+                    }
+                    Court2Html.length = 0; ///清空
+                    for (let index = 0; index < Court3Html.length; index++) {
+                        RestHtml.push(Court3Html[index]); ///等待區添加人員
+                    }
+                    Court3Html.length = 0; ///清空
+                    for (let index = 0; index < Court4Html.length; index++) {
+                        RestHtml.push(Court4Html[index]); ///等待區添加人員
+                    }
+                    Court4Html.length = 0; ///清空
+                    for (let index = 0; index < WaitHtml.length; index++) {
+                        RestHtml.push(WaitHtml[index]); ///等待區添加人員
+                    }
+                    WaitHtml.length = 0; ///清空
+                    RefreshView();
+                }
+            })
+            ///改場地名稱
+            $('#Court1NameBtn').click(function () {
+                if ($('#Court1NameBtn').text() === '改名') {
+                    $('#Court1NameInput').show();
+                    $('#Court1NameBtn').text('確認');
+                } else if ($('#Court1NameBtn').text() === '確認') {
+                    newName = $('#Court1NameInput').val();
+                    if (newName != '') {
+                        $('.Court1Name b').text(newName);
+                    }
+                    $('#Court1NameInput').hide();
+                    $('#Court1NameBtn').text('改名');
+                }
+            });
+            $('#Court2NameBtn').click(function () {
+                if ($('#Court2NameBtn').text() === '改名') {
+                    $('#Court2NameInput').show();
+                    $('#Court2NameBtn').text('確認');
+                } else if ($('#Court2NameBtn').text() === '確認') {
+                    newName = $('#Court2NameInput').val();
+                    if (newName != '') {
+                        $('.Court2Name b').text(newName);
+                    }
+                    $('#Court2NameInput').hide();
+                    $('#Court2NameBtn').text('改名');
+                }
+            });
+            $('#Court3NameBtn').click(function () {
+                if ($('#Court3NameBtn').text() === '改名') {
+                    $('#Court3NameInput').show();
+                    $('#Court3NameBtn').text('確認');
+                } else if ($('#Court3NameBtn').text() === '確認') {
+                    newName = $('#Court3NameInput').val();
+                    if (newName != '') {
+                        $('.Court3Name b').text(newName);
+                    }
+                    $('#Court3NameInput').hide();
+                    $('#Court3NameBtn').text('改名');
+                }
+            });
+            $('#Court4NameBtn').click(function () {
+                if ($('#Court4NameBtn').text() === '改名') {
+                    $('#Court4NameInput').show();
+                    $('#Court4NameBtn').text('確認');
+                } else if ($('#Court4NameBtn').text() === '確認') {
+                    newName = $('#Court4NameInput').val();
+                    if (newName != '') {
+                        $('.Court4Name b').text(newName);
+                    }
+                    $('#Court4NameInput').hide();
+                    $('#Court4NameBtn').text('改名');
+                }
+            });
+            ///換人 按紐
+            $('#ChangeIdC1').click(function () {
+                CheckElement();
+                Court1Html = Court1Html.sort(shuffle);
+                for (let index = 0; index < Court1Html.length; index++) {
+                    WaitHtml.push(Court1Html[index]); ///等待區添加人員
+                }
+                Court1Html.length = 0; ///清空
+                for (let index = 0; index < 4; index++) {
+                    if (WaitHtml.length != 0) {
+                        Court1Html.push(WaitHtml.shift()); ///將等待區人員移自Court
+                    }
+                }
+                RefreshView();
+            });
+            $('#ChangeIdC2').click(function () {
+                CheckElement();
+                Court2Html = Court2Html.sort(shuffle);
+                for (let index = 0; index < Court2Html.length; index++) {
+                    WaitHtml.push(Court2Html[index]); ///等待區添加人員
+                }
+                Court2Html.length = 0; ///清空
+                for (let index = 0; index < 4; index++) {
+                    if (WaitHtml.length != 0) {
+                        Court2Html.push(WaitHtml.shift()); ///將等待區人員移自Court
+                    }
+                }
+                RefreshView();
+            });
+            $('#ChangeIdC3').click(function () {
+                CheckElement();
+                Court3Html = Court3Html.sort(shuffle);
+                for (let index = 0; index < Court3Html.length; index++) {
+                    WaitHtml.push(Court3Html[index]); ///等待區添加人員
+                }
+                Court3Html.length = 0; ///清空
+                for (let index = 0; index < 4; index++) {
+                    if (WaitHtml.length != 0) {
+                        Court3Html.push(WaitHtml.shift()); ///將等待區人員移自Court
+                    }
+                }
+                RefreshView();
+            });
+            $('#ChangeIdC4').click(function () {
+                CheckElement();
+                Court4Html = Court4Html.sort(shuffle);
+                for (let index = 0; index < Court4Html.length; index++) {
+                    WaitHtml.push(Court4Html[index]); ///等待區添加人員
+                }
+                Court4Html.length = 0; ///清空
+                for (let index = 0; index < 4; index++) {
+                    if (WaitHtml.length != 0) {
+                        Court4Html.push(WaitHtml.shift()); ///將等待區人員移自Court
+                    }
+                }
+                RefreshView();
+            });
+            ///清空場地          
+            $('#ClearIdC1').click(function () {
+                CheckElement();
+                Court1Html = Court1Html.sort(shuffle);
+                for (let index = 0; index < Court1Html.length; index++) {
+                    WaitHtml.push(Court1Html[index]); ///等待區添加人員
+                }
+                Court1Html.length = 0; ///清空
+                RefreshView();
+            });
+            $('#ClearIdC2').click(function () {
+                CheckElement();
+                Court2Html = Court2Html.sort(shuffle);
+                for (let index = 0; index < Court2Html.length; index++) {
+                    WaitHtml.push(Court2Html[index]); ///等待區添加人員
+                }
+                Court2Html.length = 0; ///清空
+                RefreshView();
+            });
+            $('#ClearIdC3').click(function () {
+                CheckElement();
+                Court3Html = Court3Html.sort(shuffle);
+                for (let index = 0; index < Court3Html.length; index++) {
+                    WaitHtml.push(Court3Html[index]); ///等待區添加人員
+                }
+                Court3Html.length = 0; ///清空
+                RefreshView();
+            });
+            $('#ClearIdC4').click(function () {
+                CheckElement();
+                Court4Html = Court4Html.sort(shuffle);
+                for (let index = 0; index < Court4Html.length; index++) {
+                    WaitHtml.push(Court4Html[index]); ///等待區添加人員
+                }
+                Court4Html.length = 0; ///清空
+                RefreshView();
+            });
+            ///場地數量 按紐
+            $('.AdjustCourtsNum_1 button').click(function () {
+                CourtsNum = 1;
+                CheckCourtsNum();
+                WritePlayers();
+            });
+            $('.AdjustCourtsNum_2 button').click(function () {
+                CourtsNum = 2;
+                CheckCourtsNum();
+                WritePlayers();
+            });
+            $('.AdjustCourtsNum_3 button').click(function () {
+                CourtsNum = 3;
+                CheckCourtsNum();
+                WritePlayers();
+            });
+            $('.AdjustCourtsNum_4 button').click(function () {
+                CourtsNum = 4;
+                CheckCourtsNum();
+                WritePlayers();
+            });
+
+            ////隊員管理畫面
+            //ul.Mgrouped 可排序 且 群組化
+            $('ul.Mgrouped').sortable({
+                group: true,
+                handle: '.sortHandle',
+                update: function () {
+                    checkPlayersCount();
+                    ///刪除人員
+                    var n_del = $('.MDelZone li').length;
+                    if (n_del >= 1) {
+                        $('.MDelZone li').remove();
+                    }
+                    ///儲存
+                    checkMArray('Male');
+                    checkMArray('Female');
+                    checkMArray('VIP');
+                },
+                scroll: true
+            });
+            ////新增隊員
+            $('.MAddMale').click(function () {
+                AddMember('Male', '男隊員');
+                checkPlayersCount();
+            });
+            $('.MAddFemale').click(function () {
+                AddMember('Female', '女隊員');
+                checkPlayersCount();
+            });
+            $('.MAddVIP').click(function () {
+                AddMember('VIP', 'VIP');
+                checkPlayersCount();
+            });
+            $('.ImportBtn').click(function () {
+                MemberToString();
+            });
+            $('.ExportBtn').click(function () {
+                StringtoMember();
+            });
+        });
+    </script>
+</head>
+
+<body>
+    <div class="tab">
+        <button class="tablinks" onclick="SelectTab(event,'CourtsManage')">球場管理</button>
+        <button class="tablinks" onclick="SelectTab(event,'MembersManage')">隊員管理</button>
+    </div>
+
+    <div id="CourtsManage" class="tabcontent">
+        <!-- <div id="CourtsManage"> -->
+        <div>
+            <h3>球場狀態</h3>
+            <button class="ClearCourtBtn">清空場地</button>
+        </div>
+        <div class="Courts">
+            <div class="Court1">
+                <div class="Court1Name">
+                    <input type="text" id="Court1NameInput">
+                    <button id="Court1NameBtn">改名</button>
+                    <b>球場1</b>
+                    <u>人數</u>
+                </div>
+                <button id="ChangeIdC1" class="ChangePBtn">換人</button>
+                <button id="ClearIdC1" class="ChangePBtn">清空</button>
+                <ul id="Court1" class="grouped">
+
+                </ul>
+            </div>
+
+            <div class="Court2">
+                <div class="Court2Name">
+                    <input type="text" id="Court2NameInput">
+                    <button id="Court2NameBtn">改名</button>
+                    <b>球場2</b>
+                    <u>人數</u>
+                </div>
+                <button id="ChangeIdC2" class="ChangePBtn">換人</button>
+                <button id="ClearIdC2" class="ChangePBtn">清空</button>
+                <ul id="Court2" class="grouped">
+
+                </ul>
+            </div>
+
+            <div class="Court3">
+                <div class="Court3Name">
+                    <input type="text" id="Court3NameInput">
+                    <button id="Court3NameBtn">改名</button>
+                    <b>球場3</b>
+                    <u>人數</u>
+                </div>
+                <button id="ChangeIdC3" class="ChangePBtn">換人</button>
+                <button id="ClearIdC3" class="ChangePBtn">清空</button>
+                <ul id="Court3" class="grouped">
+
+                </ul>
+            </div>
+
+            <div class="Court4">
+                <div class="Court4Name">
+                    <input type="text" id="Court4NameInput">
+                    <button id="Court4NameBtn">改名</button>
+                    <b>球場4</b>
+                    <u>人數</u>
+                </div>
+                <button id="ChangeIdC4" class="ChangePBtn">換人</button>
+                <button id="ClearIdC4" class="ChangePBtn">清空</button>
+                <ul id="Court4" class="grouped">
+
+                </ul>
+            </div>
+        </div>
+
+        <div class="Command">
+            <div>
+                <button class="AddPlayerBtn">添加臨打人員</button>
+            </div>
+            <div class="AdjustCourtsNum">
+                <div class="AdjustCourtsNum_1">
+                    <button>1個場地</button>
+                </div>
+                <div class="AdjustCourtsNum_2">
+                    <button>2個場地</button>
+                </div>
+                <div class="AdjustCourtsNum_3">
+                    <button>3個場地</button>
+                </div>
+                <div class="AdjustCourtsNum_4">
+                    <button>4個場地</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="Wait">
+            <b>等待區狀態</b>
+            <u>人數</u>
+            <ul id="Waitgrouped" class="grouped">
+            </ul>
+        </div>
+
+        <div class="Rest">
+            <b>休息區(不會上場)</b>
+            <u>人數</u>
+            <div>
+                <button class="RefreshMemberBtn">更新隊員</button>
+            </div>
+            <ul id="Restgrouped" class="grouped">
+            </ul>
+        </div>
+        <div class="DelZone">
+            <b>放置此區後刪除</b>
+            <ul class="grouped">
+                <div class="empty"></div>
+            </ul>
+        </div>
+    </div>
+
+    <div id="MembersManage" class="tabcontent">
+        <!-- <div id="MembersManage"></div> -->
+        <div>
+            <h3>隊員狀態</h3>
+            <button class="ImportBtn">複製隊員</button>
+            <button class="ExportBtn">貼上隊員</button>
+        </div>
+        <div class="MMale">
+            <b>男隊員</b>
+            <u>人數</u>
+            <div>
+                <button class="MAddMale">新增</button>
+            </div>
+            <ul id="MMalegrouped" class="Mgrouped">
+            </ul>
+        </div>
+        <div class="MFemale">
+            <b>女隊員</b>
+            <u>人數</u>
+            <div>
+                <button class="MAddFemale">新增</button>
+            </div>
+            <ul id="MFemalegrouped" class="Mgrouped">
+            </ul>
+        </div>
+        <div class="MVIP">
+            <b>VIP隊員</b>
+            <u>人數</u>
+            <div>
+                <button class="MAddVIP">新增</button>
+            </div>
+            <ul id="MVIPgrouped" class="Mgrouped">
+            </ul>
+        </div>
+        <div class="MDelZone">
+            <b>放置此區後刪除</b>
+            <ul class="Mgrouped">
+                <div class="empty"></div>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        function SelectTab(evt, who) {
+            var i, tabcontent, tablinks;
+            tabcontent = document.getElementsByClassName('tabcontent');
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = 'none';
+            }
+            tablinks = document.getElementsByClassName('tablinks');
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(' active', '');
+            }
+            document.getElementById(who).style.display = 'block';
+            evt.currentTarget.className += ' active';
+        }
+    </script>
+</body>
+
+</html>
