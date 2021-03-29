@@ -145,6 +145,7 @@ function StringtoMember() {
         ReadMembers('Female');
         ReadMembers('VIP');
         checkPlayersCount();
+        alert("貼上成功！");
     } catch (e) {
         alert(e);
     }
