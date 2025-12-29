@@ -1,901 +1,196 @@
 <!DOCTYPE html>
-
-<html lang="en">
-
-
+<html lang="zh-TW">
 
 <head>
-
     <meta charset="UTF-8">
-
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-
-    <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
-
-    <meta name="viewport"
-
-        content="width=device-width, initial-scale=1.0, minimum-scale=0.5, maximum-scale=2.0, user-scalable=no" />
-
-    <title>羽球管理</title>
-
-    <link rel="stylesheet" href="style.css">
-
-    <link rel="stylesheet" href="draganddrop.css">
-
-    <link rel="stylesheet" href="http://www.jqueryscript.net/css/jquerysctipttop.css">
-
-    <!-- <link rel="stylesheet" href="https://bootswatch.com/flatly/bootstrap.min.css"> -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=0.5, maximum-scale=2.0, user-scalable=no" />
+    <title>羽球管理系統 - 專業版</title>
 
     <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
-
     <script src="draganddrop.js"></script>
-
     <script src="Event.js"></script>
-
     <script src="RWdata.js"></script>
-
     <script src="Copy.js"></script>
 
-
-
-    <h1>羽球管理</h1>
-
-
-
-    <script type="text/javascript">
-
-        $(document).ready(function () {
-
-            // init area
-
-            ReadMembers('Male');
-
-            ReadMembers('Female');
-
-            ReadMembers('VIP');
-
-
-
-            ReadPlayers();
-
-            CheckCourtsNum();
-
-            AddPlayers();
-
-            // AddRestPlayers(); 
-
-
-
-
-
-            checkPlayersCount();
-
-            InitHideCourtNameInput();
-
-            //ManualDel();
-
-            ///球場管理畫面
-
-            //ul.grouped 可排序 且 群組化
-
-            $('ul.grouped').sortable({
-
-                group: true,
-
-                handle: '.sortHandle',
-
-                update: function () {
-
-                    CheckArray();
-
-                    checkPlayersCount();
-
-                    ///刪除人員
-
-                    var n_del = $('.DelZone li').length;
-
-                    if (n_del >= 1) {
-
-                        $('.DelZone li').remove();
-
-                    }
-
-                    CheckElement();
-
-                },
-
-                scroll: true
-
-            });
-
-
-
-            ///Command Btn Event
-
-            ///添加臨打人員
-
-            $('.AddPlayerBtn').click(function () {
-
-                AddPayPlayers();
-
-                checkPlayersCount();
-
-                WritePlayers();
-
-                CheckElement();
-
-            });
-
-            $('.RefreshMemberBtn').click(function () {
-
-                AddRestPlayers();
-
-                checkPlayersCount();
-
-                WritePlayers();
-
-                CheckElement();
-
-            });
-
-            $('.ClearCourtBtn').click(function () {
-
-                var yes = confirm('清空場地會將所有人員清空\n請確認');
-
-                if (yes) {
-
-                    CheckElement();
-
-                    for (let index = 0; index < Court1Html.length; index++) {
-
-                        RestHtml.push(Court1Html[index]); ///等待區添加人員
-
-                    }
-
-                    Court1Html.length = 0; ///清空
-
-                    for (let index = 0; index < Court2Html.length; index++) {
-
-                        RestHtml.push(Court2Html[index]); ///等待區添加人員
-
-                    }
-
-                    Court2Html.length = 0; ///清空
-
-                    for (let index = 0; index < Court3Html.length; index++) {
-
-                        RestHtml.push(Court3Html[index]); ///等待區添加人員
-
-                    }
-
-                    Court3Html.length = 0; ///清空
-
-                    for (let index = 0; index < Court4Html.length; index++) {
-
-                        RestHtml.push(Court4Html[index]); ///等待區添加人員
-
-                    }
-
-                    Court4Html.length = 0; ///清空
-
-                    for (let index = 0; index < WaitHtml.length; index++) {
-
-                        RestHtml.push(WaitHtml[index]); ///等待區添加人員
-
-                    }
-
-                    WaitHtml.length = 0; ///清空
-
-                    RefreshView();
-
-                }
-
-            })
-
-            ///改場地名稱
-
-            $('#Court1NameBtn').click(function () {
-
-                if ($('#Court1NameBtn').text() === '改名') {
-
-                    $('#Court1NameInput').show();
-
-                    $('#Court1NameBtn').text('確認');
-
-                } else if ($('#Court1NameBtn').text() === '確認') {
-
-                    newName = $('#Court1NameInput').val();
-
-                    if (newName != '') {
-
-                        $('.Court1Name b').text(newName);
-
-                    }
-
-                    $('#Court1NameInput').hide();
-
-                    $('#Court1NameBtn').text('改名');
-
-                }
-
-            });
-
-            $('#Court2NameBtn').click(function () {
-
-                if ($('#Court2NameBtn').text() === '改名') {
-
-                    $('#Court2NameInput').show();
-
-                    $('#Court2NameBtn').text('確認');
-
-                } else if ($('#Court2NameBtn').text() === '確認') {
-
-                    newName = $('#Court2NameInput').val();
-
-                    if (newName != '') {
-
-                        $('.Court2Name b').text(newName);
-
-                    }
-
-                    $('#Court2NameInput').hide();
-
-                    $('#Court2NameBtn').text('改名');
-
-                }
-
-            });
-
-            $('#Court3NameBtn').click(function () {
-
-                if ($('#Court3NameBtn').text() === '改名') {
-
-                    $('#Court3NameInput').show();
-
-                    $('#Court3NameBtn').text('確認');
-
-                } else if ($('#Court3NameBtn').text() === '確認') {
-
-                    newName = $('#Court3NameInput').val();
-
-                    if (newName != '') {
-
-                        $('.Court3Name b').text(newName);
-
-                    }
-
-                    $('#Court3NameInput').hide();
-
-                    $('#Court3NameBtn').text('改名');
-
-                }
-
-            });
-
-            $('#Court4NameBtn').click(function () {
-
-                if ($('#Court4NameBtn').text() === '改名') {
-
-                    $('#Court4NameInput').show();
-
-                    $('#Court4NameBtn').text('確認');
-
-                } else if ($('#Court4NameBtn').text() === '確認') {
-
-                    newName = $('#Court4NameInput').val();
-
-                    if (newName != '') {
-
-                        $('.Court4Name b').text(newName);
-
-                    }
-
-                    $('#Court4NameInput').hide();
-
-                    $('#Court4NameBtn').text('改名');
-
-                }
-
-            });
-
-            ///換人 按紐
-
-            $('#ChangeIdC1').click(function () {
-
-                CheckElement();
-
-                Court1Html = Court1Html.sort(shuffle);
-
-                for (let index = 0; index < Court1Html.length; index++) {
-
-                    WaitHtml.push(Court1Html[index]); ///等待區添加人員
-
-                }
-
-                Court1Html.length = 0; ///清空
-
-                for (let index = 0; index < 4; index++) {
-
-                    if (WaitHtml.length != 0) {
-
-                        Court1Html.push(WaitHtml.shift()); ///將等待區人員移自Court
-
-                    }
-
-                }
-
-                RefreshView();
-
-            });
-
-            $('#ChangeIdC2').click(function () {
-
-                CheckElement();
-
-                Court2Html = Court2Html.sort(shuffle);
-
-                for (let index = 0; index < Court2Html.length; index++) {
-
-                    WaitHtml.push(Court2Html[index]); ///等待區添加人員
-
-                }
-
-                Court2Html.length = 0; ///清空
-
-                for (let index = 0; index < 4; index++) {
-
-                    if (WaitHtml.length != 0) {
-
-                        Court2Html.push(WaitHtml.shift()); ///將等待區人員移自Court
-
-                    }
-
-                }
-
-                RefreshView();
-
-            });
-
-            $('#ChangeIdC3').click(function () {
-
-                CheckElement();
-
-                Court3Html = Court3Html.sort(shuffle);
-
-                for (let index = 0; index < Court3Html.length; index++) {
-
-                    WaitHtml.push(Court3Html[index]); ///等待區添加人員
-
-                }
-
-                Court3Html.length = 0; ///清空
-
-                for (let index = 0; index < 4; index++) {
-
-                    if (WaitHtml.length != 0) {
-
-                        Court3Html.push(WaitHtml.shift()); ///將等待區人員移自Court
-
-                    }
-
-                }
-
-                RefreshView();
-
-            });
-
-            $('#ChangeIdC4').click(function () {
-
-                CheckElement();
-
-                Court4Html = Court4Html.sort(shuffle);
-
-                for (let index = 0; index < Court4Html.length; index++) {
-
-                    WaitHtml.push(Court4Html[index]); ///等待區添加人員
-
-                }
-
-                Court4Html.length = 0; ///清空
-
-                for (let index = 0; index < 4; index++) {
-
-                    if (WaitHtml.length != 0) {
-
-                        Court4Html.push(WaitHtml.shift()); ///將等待區人員移自Court
-
-                    }
-
-                }
-
-                RefreshView();
-
-            });
-
-            ///清空場地          
-
-            $('#ClearIdC1').click(function () {
-
-                CheckElement();
-
-                Court1Html = Court1Html.sort(shuffle);
-
-                for (let index = 0; index < Court1Html.length; index++) {
-
-                    WaitHtml.push(Court1Html[index]); ///等待區添加人員
-
-                }
-
-                Court1Html.length = 0; ///清空
-
-                RefreshView();
-
-            });
-
-            $('#ClearIdC2').click(function () {
-
-                CheckElement();
-
-                Court2Html = Court2Html.sort(shuffle);
-
-                for (let index = 0; index < Court2Html.length; index++) {
-
-                    WaitHtml.push(Court2Html[index]); ///等待區添加人員
-
-                }
-
-                Court2Html.length = 0; ///清空
-
-                RefreshView();
-
-            });
-
-            $('#ClearIdC3').click(function () {
-
-                CheckElement();
-
-                Court3Html = Court3Html.sort(shuffle);
-
-                for (let index = 0; index < Court3Html.length; index++) {
-
-                    WaitHtml.push(Court3Html[index]); ///等待區添加人員
-
-                }
-
-                Court3Html.length = 0; ///清空
-
-                RefreshView();
-
-            });
-
-            $('#ClearIdC4').click(function () {
-
-                CheckElement();
-
-                Court4Html = Court4Html.sort(shuffle);
-
-                for (let index = 0; index < Court4Html.length; index++) {
-
-                    WaitHtml.push(Court4Html[index]); ///等待區添加人員
-
-                }
-
-                Court4Html.length = 0; ///清空
-
-                RefreshView();
-
-            });
-
-            ///場地數量 按紐
-
-            $('.AdjustCourtsNum_1 button').click(function () {
-
-                CourtsNum = 1;
-
-                CheckCourtsNum();
-
-                WritePlayers();
-
-            });
-
-            $('.AdjustCourtsNum_2 button').click(function () {
-
-                CourtsNum = 2;
-
-                CheckCourtsNum();
-
-                WritePlayers();
-
-            });
-
-            $('.AdjustCourtsNum_3 button').click(function () {
-
-                CourtsNum = 3;
-
-                CheckCourtsNum();
-
-                WritePlayers();
-
-            });
-
-            $('.AdjustCourtsNum_4 button').click(function () {
-
-                CourtsNum = 4;
-
-                CheckCourtsNum();
-
-                WritePlayers();
-
-            });
-
-
-
-            ////隊員管理畫面
-
-            //ul.Mgrouped 可排序 且 群組化
-
-            $('ul.Mgrouped').sortable({
-
-                group: true,
-
-                handle: '.sortHandle',
-
-                update: function () {
-
-                    checkPlayersCount();
-
-                    ///刪除人員
-
-                    var n_del = $('.MDelZone li').length;
-
-                    if (n_del >= 1) {
-
-                        $('.MDelZone li').remove();
-
-                    }
-
-                    ///儲存
-
-                    checkMArray('Male');
-
-                    checkMArray('Female');
-
-                    checkMArray('VIP');
-
-                },
-
-                scroll: true
-
-            });
-
-            ////新增隊員
-
-            $('.MAddMale').click(function () {
-
-                AddMember('Male', '男隊員');
-
-                checkPlayersCount();
-
-            });
-
-            $('.MAddFemale').click(function () {
-
-                AddMember('Female', '女隊員');
-
-                checkPlayersCount();
-
-            });
-
-            $('.MAddVIP').click(function () {
-
-                AddMember('VIP', 'VIP');
-
-                checkPlayersCount();
-
-            });
-
-            $('.ImportBtn').click(function () {
-
-                MemberToString();
-
-            });
-
-            $('.ExportBtn').click(function () {
-
-                StringtoMember();
-
-            });
-
-        });
-
-    </script>
-
-</head>
-
-
-
-<body>
-
-    <div class="tab">
-
-        <button class="tablinks" onclick="SelectTab(event,'CourtsManage')">球場管理</button>
-
-        <button class="tablinks" onclick="SelectTab(event,'MembersManage')">隊員管理</button>
-
-        <button class="tablinks" onclick="SelectTab(event,'PayManage')">付款管理</button>
-
-    </div>
-
-
-
-    <div id="CourtsManage" class="tabcontent">
-    <div style="max-width: 1200px; margin: 0 auto;">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-            <h3>🏟️ 當前場地狀態</h3>
-            <button class="ClearCourtBtn">🗑️ 全場清空重置</button>
-        </div>
-
-        <div class="Courts">
-            </div>
-
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
-            <div class="Wait">
-                <b>⏳ 等待區狀態</b>
-                <ul id="Waitgrouped" class="grouped" style="background: #f0f4f7; border: none; grid-template-columns: 1fr 1fr 1fr;"></ul>
-            </div>
-            <div class="Rest">
-                <b>☕ 休息區</b>
-                <button class="RefreshMemberBtn" style="padding: 5px 15px; width: auto; margin-left: 10px;">更新</button>
-                <ul id="Restgrouped" class="grouped" style="background: #f0f4f7; border: none; grid-template-columns: 1fr 1fr 1fr;"></ul>
-            </div>
-        </div>
-
-        <div class="DelZone" style="margin-top: 20px;">
-            🔥 拖移至此處永久刪除人員
-            <ul class="grouped" style="min-height: 50px; border: none;"></ul>
-        </div>
-    </div>
-</div>
-
-
-
-        <div class="Command">
-
-            <div>
-
-                <button class="AddPlayerBtn">添加臨打人員</button>
-
-            </div>
-
-            <div class="AdjustCourtsNum">
-
-                <div class="AdjustCourtsNum_1">
-
-                    <button>1個場地</button>
-
-                </div>
-
-                <div class="AdjustCourtsNum_2">
-
-                    <button>2個場地</button>
-
-                </div>
-
-                <div class="AdjustCourtsNum_3">
-
-                    <button>3個場地</button>
-
-                </div>
-
-                <div class="AdjustCourtsNum_4">
-
-                    <button>4個場地</button>
-
-                </div>
-
-            </div>
-
-        </div>
-
-
-
-        <div class="Wait">
-
-            <b>等待區狀態</b>
-
-            <u>人數</u>
-
-            <ul id="Waitgrouped" class="grouped">
-
-            </ul>
-
-        </div>
-
-
-
-        <div class="Rest">
-
-            <b>休息區(不會上場)</b>
-
-            <u>人數</u>
-
-            <div>
-
-                <button class="RefreshMemberBtn">更新隊員</button>
-
-            </div>
-
-            <ul id="Restgrouped" class="grouped">
-
-            </ul>
-
-        </div>
-
-        <div class="DelZone">
-
-            <b>放置此區後刪除</b>
-
-            <ul class="grouped">
-
-                <div class="empty"></div>
-
-            </ul>
-
-        </div>
-
-    </div>
-
-
-
-    <div id="MembersManage" class="tabcontent">
-
-        <!-- <div id="MembersManage"></div> -->
-
-        <div>
-
-            <h3>隊員狀態</h3>
-
-            <button class="ImportBtn">複製隊員</button>
-
-            <button class="ExportBtn">貼上隊員</button>
-
-        </div>
-
-        <div class="MMale">
-
-            <b>男隊員</b>
-
-            <u>人數</u>
-
-            <div>
-
-                <button class="MAddMale">新增</button>
-
-            </div>
-
-            <ul id="MMalegrouped" class="Mgrouped">
-
-            </ul>
-
-        </div>
-
-        <div class="MFemale">
-
-            <b>女隊員</b>
-
-            <u>人數</u>
-
-            <div>
-
-                <button class="MAddFemale">新增</button>
-
-            </div>
-
-            <ul id="MFemalegrouped" class="Mgrouped">
-
-            </ul>
-
-        </div>
-
-        <div class="MVIP">
-
-            <b>VIP隊員</b>
-
-            <u>人數</u>
-
-            <div>
-
-                <button class="MAddVIP">新增</button>
-
-            </div>
-
-            <ul id="MVIPgrouped" class="Mgrouped">
-
-            </ul>
-
-        </div>
-
-        <div class="MDelZone">
-
-            <b>放置此區後刪除</b>
-
-            <ul class="Mgrouped">
-
-                <div class="empty"></div>
-
-            </ul>
-
-        </div>
-
-    </div>
-
-
-
-    <div id="PayManage" class="tabcontent">
-
-        <div class="PayZone">
-
-            <b>付款名單</b>
-
-            <ul class="Paygrouped">
-
-
-
-            </ul>
-
-        </div>
-
-        <div class="PayDelZone">
-
-            <b>付款名單放置此區後刪除</b>
-
-            <ul class="Paygrouped">
-
-
-
-            </ul>
-
-        </div>
-
-    </div>
-
-
-
-    <script>
-
-        function SelectTab(evt, who) {
-
-            var i, tabcontent, tablinks;
-
-            tabcontent = document.getElementsByClassName('tabcontent');
-
-            for (i = 0; i < tabcontent.length; i++) {
-
-                tabcontent[i].style.display = 'none';
-
-            }
-
-            tablinks = document.getElementsByClassName('tablinks');
-
-            for (i = 0; i < tablinks.length; i++) {
-
-                tablinks[i].className = tablinks[i].className.replace(' active', '');
-
-            }
-
-            document.getElementById(who).style.display = 'block';
-
-            evt.currentTarget.className += ' active';
-
+    <style>
+        :root {
+            --primary-green: #2ecc71;
+            --dark-green: #27ae60;
+            --court-bg: #1e5d3b; /* 專業深綠地墊色 */
+            --bg-color: #f4f7f6;
+            --card-bg: #ffffff;
+            --text-color: #2c3e50;
+            --male-color: #3498db;
+            --female-color: #e74c3c;
+            --vip-color: #f1c40f;
         }
 
-    </script>
+        body {
+            font-family: 'PingFang TC', 'Microsoft JhengHei', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 20px;
+            line-height: 1.6;
+        }
 
-</body>
+        header {
+            text-align: center;
+            padding: 20px 0;
+            background: linear-gradient(135deg, var(--primary-green), var(--dark-green));
+            color: white;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
 
+        header h1 { margin: 0; font-size: 2rem; letter-spacing: 2px; }
 
+        /* --- Tab 樣式 --- */
+        .tab {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 25px;
+        }
 
+        .tablinks {
+            padding: 12px 28px;
+            border: none;
+            background: #dcdde1;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: 0.3s;
+            font-weight: bold;
+            color: #7f8c8d;
+        }
 
+        .tablinks.active {
+            background: var(--primary-green);
+            color: white;
+            box-shadow: 0 4px 12px rgba(46, 204, 113, 0.4);
+        }
 
-</html>
+        .tabcontent {
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
 
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        /* --- 球場區域 2x2 佈局 --- */
+        .Courts {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        /* 讓個別場地看起來像球場 */
+        .Court1, .Court2, .Court3, .Court4 {
+            background: var(--court-bg);
+            border: 5px solid #ffffff;
+            border-radius: 12px;
+            padding: 15px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+            position: relative;
+        }
+
+        .Court1Name, .Court2Name, .Court3Name, .Court4Name {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 8px 12px;
+            border-radius: 6px;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .Court1Name b { color: var(--dark-green); font-size: 1.2rem; }
+        
+        /* 列表樣式：模擬場內 4 個位置 */
+        ul.grouped {
+            min-height: 120px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px dashed rgba(255, 255, 255, 0.3);
+            border-radius: 8px;
+            padding: 10px;
+            list-style: none;
+            margin: 10px 0;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        /* 隊員小卡片 */
+        li {
+            background: white;
+            border-radius: 8px;
+            padding: 10px;
+            font-weight: bold;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            border-left: 6px solid #95a5a6; /* 預設色 */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: grab;
+        }
+
+        /* 如果你的 JS 會給予對應類別，這裡會自動上色 */
+        li.Male { border-left-color: var(--male-color); }
+        li.Female { border-left-color: var(--female-color); }
+        li.VIP { border-left-color: var(--vip-color); }
+
+        /* --- 按鈕系統 --- */
+        button {
+            padding: 8px 16px;
+            border-radius: 6px;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.2s;
+        }
+
+        button:hover { filter: brightness(0.9); transform: translateY(-1px); }
+
+        .ChangePBtn {
+            background: #34495e;
+            color: white;
+            font-size: 0.8rem;
+            margin-left: 4px;
+        }
+
+        .ClearCourtBtn {
+            background: #e74c3c;
+            color: white;
+            width: 100%;
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+            padding: 12px;
+        }
+
+        .AddPlayerBtn, .RefreshMemberBtn {
+            background: var(--primary-green);
+            color: white;
+            width: 100%;
+            padding: 15px;
+            font-size: 1rem;
+            margin-top: 10px;
+            box-shadow: 0 4px 10px rgba(46, 204, 113, 0.2);
+        }
+
+        /* --- 輔助區域 --- */
+        .Wait, .Rest, .MMale, .MFemale, .MVIP, .PayZone {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        }
+
+        .DelZone, .MDelZone, .PayDelZone {
+            background: #ffecec;
+            border: 2px dashed #e74c3c;
+            border-radius: 12px;
+            padding:
