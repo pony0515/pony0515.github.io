@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=2.0, user-scalable=no" />
     <title>羽球管理系統 - 專業版</title>
     
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="draganddrop.css">
     <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
     <script src="draganddrop.js"></script>
     <script src="Event.js"></script>
@@ -29,44 +31,78 @@
             color: #333;
         }
 
-        h1 {
-            text-align: center;
-            color: #2c3e50;
-            margin-bottom: 20px;
-            font-weight: 800;
-        }
+        h1 { text-align: center; color: #2c3e50; margin-bottom: 20px; font-weight: 800; }
 
         /* --- 頁籤導覽 --- */
-        .tab {
-            display: flex;
-            justify-content: center;
-            gap: 5px;
-            margin-bottom: 25px;
-        }
-
+        .tab { display: flex; justify-content: center; gap: 8px; margin-bottom: 25px; }
         .tablinks {
-            padding: 12px 30px;
-            border: none;
-            background: #fff;
-            border-radius: 50px;
-            cursor: pointer;
-            font-weight: bold;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            transition: 0.3s;
+            padding: 12px 30px; border: none; background: #fff; border-radius: 50px;
+            cursor: pointer; font-weight: bold; box-shadow: 0 2px 5px rgba(0,0,0,0.1); transition: 0.3s;
+        }
+        .tablinks.active { background: var(--primary-green); color: white; }
+        .tabcontent { display: none; animation: fadeIn 0.3s; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        /* --- 主佈局 --- */
+        .main-container { display: grid; grid-template-columns: 1fr 320px; gap: 20px; max-width: 1400px; margin: 0 auto; }
+        @media (max-width: 1024px) { .main-container { grid-template-columns: 1fr; } }
+
+        /* --- 球場視覺設計 --- */
+        .Courts { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 25px; }
+        .court-box {
+            background: var(--primary-green); border: 4px solid var(--court-line);
+            border-radius: 12px; padding: 15px; position: relative; box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+        }
+        .court-header {
+            display: flex; justify-content: space-between; align-items: center;
+            margin-bottom: 15px; background: rgba(255,255,255,0.95); padding: 8px 12px; border-radius: 8px;
+        }
+        .court-title b { color: var(--primary-green); font-size: 1.1em; }
+        
+        /* 模擬球場站位 */
+        ul.grouped {
+            display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: repeat(2, 70px);
+            gap: 15px; list-style: none; padding: 10px; margin: 0; min-height: 160px;
+            background-image: linear-gradient(to bottom, transparent 49%, rgba(255,255,255,0.4) 50%, transparent 51%);
         }
 
-        .tablinks.active {
-            background: var(--primary-green);
-            color: white;
+        /* 球員小卡片 */
+        li {
+            background: #fff; border-radius: 6px; display: flex; align-items: center;
+            justify-content: center; font-weight: bold; cursor: grab; padding: 10px;
+            box-shadow: 0 3px 5px rgba(0,0,0,0.1); border-left: 6px solid #ccc;
+        }
+        /* 這裡是為了讓 JS 渲染時能自動套用顏色 */
+        li[data-type="Male"], li.Male { border-left-color: var(--male-color); }
+        li[data-type="Female"], li.Female { border-left-color: var(--female-color); }
+        li[data-type="VIP"], li.VIP { border-left-color: var(--vip-color); }
+
+        /* --- 右側側邊欄 --- */
+        .side-panel { display: flex; flex-direction: column; gap: 20px; }
+        .panel-card { background: #fff; padding: 15px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+        .panel-card h3 { margin: 0 0 10px 0; font-size: 1rem; border-bottom: 1px solid #eee; padding-bottom: 5px; }
+
+        button { padding: 8px 12px; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; transition: 0.2s; }
+        .btn-main { background: var(--primary-green); color: white; width: 100%; padding: 12px; margin-bottom: 10px; }
+        .btn-minor { background: #f8f9fa; color: #333; border: 1px solid #ddd; font-size: 12px; }
+        .btn-danger { background: #e74c3c; color: white; width: 100%; padding: 12px; }
+
+        /* 列表容器 */
+        #Waitgrouped, #Restgrouped, #MMalegrouped, #MFemalegrouped, #MVIPgrouped {
+            display: block; min-height: 80px; list-style: none; padding: 5px; border: 1px dashed #ccc; margin-top: 10px;
         }
 
-        /* --- 主佈局：左邊球場，右邊清單 --- */
-        .main-container {
-            display: grid;
-            grid-template-columns: 1fr 320px;
-            gap: 20px;
-            max-width: 1400px;
-            margin: 0 auto;
+        .DelZone, .MDelZone {
+            border: 2px dashed #e74c3c; background: #fff5f5; color: #e74c3c;
+            text-align: center; padding: 20px; border-radius: 12px; font-weight: bold;
         }
+    </style>
+</head>
 
-        @media (max-width: 900px) {
+<body>
+
+    <h1>🏸 羽球場地管理系統</h1>
+
+    <div class="tab">
+        <button class="tablinks active" onclick="SelectTab(event,'CourtsManage')">球場管理</button>
+        <button class="tablinks" onclick="SelectTab(event,'MembersManage
