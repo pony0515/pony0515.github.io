@@ -629,130 +629,33 @@
 
 
     <div id="CourtsManage" class="tabcontent">
-
-        <!-- <div id="CourtsManage"> -->
-
-        <div>
-
-            <h3>球場狀態</h3>
-
-            <button class="ClearCourtBtn">清空場地</button>
-
+    <div style="max-width: 1200px; margin: 0 auto;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+            <h3>🏟️ 當前場地狀態</h3>
+            <button class="ClearCourtBtn">🗑️ 全場清空重置</button>
         </div>
 
         <div class="Courts">
-
-            <div class="Court1">
-
-                <div class="Court1Name">
-
-                    <input type="text" id="Court1NameInput">
-
-                    <button id="Court1NameBtn">改名</button>
-
-                    <b>球場1</b>
-
-                    <u>人數</u>
-
-                </div>
-
-                <button id="ChangeIdC1" class="ChangePBtn">換人</button>
-
-                <button id="ClearIdC1" class="ChangePBtn">清空</button>
-
-                <ul id="Court1" class="grouped">
-
-
-
-                </ul>
-
             </div>
 
-
-
-            <div class="Court2">
-
-                <div class="Court2Name">
-
-                    <input type="text" id="Court2NameInput">
-
-                    <button id="Court2NameBtn">改名</button>
-
-                    <b>球場2</b>
-
-                    <u>人數</u>
-
-                </div>
-
-                <button id="ChangeIdC2" class="ChangePBtn">換人</button>
-
-                <button id="ClearIdC2" class="ChangePBtn">清空</button>
-
-                <ul id="Court2" class="grouped">
-
-
-
-                </ul>
-
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+            <div class="Wait">
+                <b>⏳ 等待區狀態</b>
+                <ul id="Waitgrouped" class="grouped" style="background: #f0f4f7; border: none; grid-template-columns: 1fr 1fr 1fr;"></ul>
             </div>
-
-
-
-            <div class="Court3">
-
-                <div class="Court3Name">
-
-                    <input type="text" id="Court3NameInput">
-
-                    <button id="Court3NameBtn">改名</button>
-
-                    <b>球場3</b>
-
-                    <u>人數</u>
-
-                </div>
-
-                <button id="ChangeIdC3" class="ChangePBtn">換人</button>
-
-                <button id="ClearIdC3" class="ChangePBtn">清空</button>
-
-                <ul id="Court3" class="grouped">
-
-
-
-                </ul>
-
+            <div class="Rest">
+                <b>☕ 休息區</b>
+                <button class="RefreshMemberBtn" style="padding: 5px 15px; width: auto; margin-left: 10px;">更新</button>
+                <ul id="Restgrouped" class="grouped" style="background: #f0f4f7; border: none; grid-template-columns: 1fr 1fr 1fr;"></ul>
             </div>
-
-
-
-            <div class="Court4">
-
-                <div class="Court4Name">
-
-                    <input type="text" id="Court4NameInput">
-
-                    <button id="Court4NameBtn">改名</button>
-
-                    <b>球場4</b>
-
-                    <u>人數</u>
-
-                </div>
-
-                <button id="ChangeIdC4" class="ChangePBtn">換人</button>
-
-                <button id="ClearIdC4" class="ChangePBtn">清空</button>
-
-                <ul id="Court4" class="grouped">
-
-
-
-                </ul>
-
-            </div>
-
         </div>
+
+        <div class="DelZone" style="margin-top: 20px;">
+            🔥 拖移至此處永久刪除人員
+            <ul class="grouped" style="min-height: 50px; border: none;"></ul>
+        </div>
+    </div>
+</div>
 
 
 
@@ -995,3 +898,4 @@
 
 
 </html>
+
