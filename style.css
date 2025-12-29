@@ -1,190 +1,144 @@
+:root {
+    --primary-color: #2ecc71; /* 羽球場綠 */
+    --bg-color: #f4f7f6;
+    --card-bg: #ffffff;
+    --text-color: #2c3e50;
+    --male-color: #3498db;
+    --female-color: #e74c3c;
+    --vip-color: #f1c40f;
+    --danger-color: #95a5a6;
+}
+
 body {
-    touch-action: manipulation;
+    font-family: 'PingFang TC', 'Microsoft JhengHei', sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    margin: 0;
+    padding: 20px;
 }
 
 h1 {
-    font-size: 10px;
-    color: red;
+    text-align: center;
+    color: #27ae60;
+    margin-bottom: 30px;
 }
 
-.empty {
-    display: inline-block;
-    height: 15vw;
-}
-
-.grouped {
-    display: flex;
-    flex-wrap: wrap;
-    list-style-type: none;
-    list-style-position: inside;
-    padding: 0;
-    margin: 0;
-    overflow: hidden;
-    background-color: silver;
-}
-
-.grouped li {
-    float: left;
-    background-color: yellowgreen;
-    height: auto;
-    width: 21vw;
-    border: grey outset 3px;
-    overflow: hidden;
-}
-
-.Mgrouped {
-    display: flex;
-    flex-wrap: wrap;
-    list-style-type: none;
-    list-style-position: inside;
-    padding: 0;
-    margin: 0;
-    overflow: hidden;
-    background-color: silver;
-}
-
-.Mgrouped li {
-    float: left;
-    background-color: yellowgreen;
-    height: auto;
-    width: 21vw;
-    border: grey outset 3px;
-    overflow: hidden;
-}
-
-.Courts {
-    background-color: sandybrown;
-}
-
-.Wait {
-    background-color: sandybrown;
-}
-
-.Rest {
-    background-color: sandybrown;
-}
-
-.MMale {
-    background-color: sandybrown;
-}
-
-.MFemale {
-    background-color: sandybrown;
-}
-
-.MVIP {
-    background-color: sandybrown;
-}
-
-
-.Courts button {
-    margin: 5x;
-}
-
-.ChangePBtn {
-    font-size: 25px;
-}
-
-.AdjustCourtsNum {
-    list-style-position: inside;
-    padding: 0;
-    margin: 5px;
-    overflow: hidden;
-}
-
-.AdjustCourtsNum button {
-    float: left;
-    background-color: wheat;
-}
-
-.AddPlayerBtn {
-    margin: 5px 0px;
-}
-
-.AdjustCourtsNum_1 {
-    margin: 5px 0px;
-}
-
-.AdjustCourtsNum_2 {
-    margin: 5px 0px;
-}
-
-.AdjustCourtsNum_3 {
-    margin: 5px 0px;
-}
-
-.AdjustCourtsNum_4 {
-    margin: 5px 0px;
-}
-
-.DelZone {
-    background-color: red;
-}
-
-.MDelZone {
-    background-color: red;
-}
-
-.ChangePBtn {
-    margin: 5px;
-}
-
+/* Tab 樣式美化 */
 .tab {
-    overflow: hidden;
-    border: 1px solid #ccc;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 20px;
 }
 
 .tab button {
-    background-color: inherit;
-    float: left;
+    padding: 12px 24px;
     border: none;
-    outline: none;
+    background: #ddd;
+    border-radius: 8px;
     cursor: pointer;
-    padding: 14px 16px;
     transition: 0.3s;
-    font-size: 17px;
-}
-
-.tab button:hover {
-    background-color: #ddd;
+    font-weight: bold;
 }
 
 .tab button.active {
-    background-color: #ccc;
+    background: var(--primary-color);
+    color: white;
+    box-shadow: 0 4px 12px rgba(46, 204, 113, 0.3);
 }
 
-.tabcontent {
-    display: none;
-    padding: 6px 12px;
-    border: 1px solid #ccc;
-    border-top: none;
+/* 場地卡片佈局 */
+.Courts {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    margin-bottom: 30px;
 }
 
-
-.MAddMale {
-    margin: 5px;
+.Court1, .Court2, .Court3, .Court4 {
+    background: var(--card-bg);
+    border: 3px solid var(--primary-color);
+    border-radius: 12px;
+    padding: 15px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    position: relative;
 }
 
-.MAddFemale {
-    margin: 5px;
+.Court1Name b, .Court2Name b, .Court3Name b, .Court4Name b {
+    display: block;
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+    color: var(--primary-color);
+    border-bottom: 1px solid #eee;
+    padding-bottom: 5px;
 }
 
-.MAddVIP {
-    margin: 5px;
+/* 列表樣式 */
+ul.grouped, ul.Mgrouped {
+    min-height: 120px;
+    background: #f9f9f9;
+    border: 1px dashed #ccc;
+    border-radius: 8px;
+    padding: 10px;
+    list-style: none;
+    margin: 10px 0;
 }
 
-.RefreshMemberBtn {
-    margin: 5px;
+/* 隊員小卡片 (假設你的 JS 會生成 li) */
+li {
+    background: white;
+    border-radius: 6px;
+    padding: 8px 12px;
+    margin-bottom: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
-.ClearCourtBtn {
-    margin: 5px;
+/* 按鈕美化 */
+button {
+    padding: 8px 15px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    transition: 0.2s;
+    background: #ecf0f1;
 }
 
-.ImportBtn {
-    margin: 5px;
+button:hover {
+    filter: brightness(0.9);
 }
 
-.ExportBtn {
-    margin: 5px;
+.ChangePBtn {
+    background: #34495e;
+    color: white;
+    font-size: 12px;
+}
+
+.AddPlayerBtn, .RefreshMemberBtn {
+    background: var(--primary-color);
+    color: white;
+    width: 100%;
+    padding: 15px;
+    font-size: 1rem;
+    margin: 10px 0;
+}
+
+/* 刪除區域 */
+.DelZone, .MDelZone {
+    background: #ffecec;
+    border: 2px dashed #e74c3c;
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+    color: #e74c3c;
+}
+
+/* 等待與休息區 */
+.Wait, .Rest {
+    background: white;
+    padding: 15px;
+    border-radius: 12px;
+    margin-bottom: 20px;
 }
