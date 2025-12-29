@@ -1,16 +1,72 @@
-<div class="badminton-hall">
-    <div class="court-container">
-        <div class="court-header">
-            <span class="court-title">Court 1</span>
-            <div class="court-controls">
-                <button id="ChangeIdC1">🔄 換人</button>
-                <button id="ClearIdC1">🗑️ 清空</button>
-            </div>
-        </div>
-        <div class="court-surface">
-            <div class="net-line"></div>
-            <ul id="Court1" class="grouped court-slots">
-                </ul>
-        </div>
-    </div>
-    </div>
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=2.0, user-scalable=no" />
+    <title>羽球管理系統 - 專業版</title>
+    
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script src="draganddrop.js"></script>
+    <script src="Event.js"></script>
+    <script src="RWdata.js"></script>
+    <script src="Copy.js"></script>
+
+    <style>
+        :root {
+            --primary-green: #2d8a57;    /* 球場地墊綠 */
+            --court-line: #ffffff;      /* 球場標線 */
+            --bg-gray: #f0f2f5;         /* 背景淺灰 */
+            --male-color: #3498db;      /* 男生標籤藍 */
+            --female-color: #e74c3c;    /* 女生標籤紅 */
+            --vip-color: #f1c40f;       /* VIP金 */
+        }
+
+        body {
+            font-family: 'PingFang TC', 'Microsoft JhengHei', sans-serif;
+            background-color: var(--bg-gray);
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            font-weight: 800;
+        }
+
+        /* --- 頁籤導覽 --- */
+        .tab {
+            display: flex;
+            justify-content: center;
+            gap: 5px;
+            margin-bottom: 25px;
+        }
+
+        .tablinks {
+            padding: 12px 30px;
+            border: none;
+            background: #fff;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: bold;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            transition: 0.3s;
+        }
+
+        .tablinks.active {
+            background: var(--primary-green);
+            color: white;
+        }
+
+        /* --- 主佈局：左邊球場，右邊清單 --- */
+        .main-container {
+            display: grid;
+            grid-template-columns: 1fr 320px;
+            gap: 20px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        @media (max-width: 900px) {
